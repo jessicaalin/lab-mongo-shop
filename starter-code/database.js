@@ -44,6 +44,7 @@ class Database {
         // user is the document that we want to insert
         // remeber once it's finish to comment callback('Error inserting user');
         database.collection('users').insertOne(user, callback);
+        // database.collection(users).insertOne(user, callback);
         // callback('Error inserting user');
       }
     });
@@ -58,6 +59,7 @@ class Database {
         // Implement the query to insert a user
         // remeber once it's finish to comment callback('Error listing users');
         database.collection('users').find(callback);
+        // database.collection(users).find({}, callback);
         // callback('Error listing users');
       }
     });
@@ -74,6 +76,7 @@ class Database {
         // remeber once it's finish to comment callback('Error deleting user');
         // db.users.deleteOne({firstName: 'z'})
         database.collection('users').deleteOne({firstName}, callback);
+        // database.collection(users).remove({"firstName":firstName}, callback);
         // callback('Error deleting user');
       }
     });
@@ -88,8 +91,9 @@ class Database {
         // Implement the query to insert a product
         // product is the document to insert
         // remeber once it's finish to comment callback('Error inserting product');
-
-        callback('Error inserting product');
+        database.collection('products').insertOne(product, callback);
+        // database.collection(products).insertOne(product, callback);
+        // callback('Error inserting product');
       }
     });
   }
@@ -102,8 +106,9 @@ class Database {
         // LAB 5
         // Implement the query to list all products
         // remeber once it's finish to comment callback('Error listing products');
-
-        callback('Error listing products');
+        database.collection('products').find(callback);
+        // database.collection(products).find({}, callback);
+        // callback('Error listing products');
       }
     });
   }
@@ -117,8 +122,9 @@ class Database {
         // Implement the query to delete a product
         // productName is the name of the producto to delete
         // remeber once it's finish to comment callback('Error deleting product');
-
-        callback('Error deleting product');
+        database.collection('products').deleteOne({"name": productName}, callback);
+        // database.collection(products).remove({"name":productName}, callback);
+        // callback('Error deleting product');
       }
     });
   }
@@ -134,8 +140,10 @@ class Database {
         // productName is the name of the product that we want to buy
         // Think if you may need to implement two queries chained
         // remeber once it's finish to comment callback('Error buying product');
-
-        callback('Error buying product');
+        // can't use $set as it'll replace everything in that key with the new value
+        database.collection('users').updateOne({"firstName":userFirstName},{$push: {"shoppingCart":productName}}, callback);
+        // database.collection('users').update({"firstName":userFirstName},{$push: {"shoppingCart":productName}}, callback);
+        // callback('Error buying product');
       }
     });
   }
@@ -150,8 +158,9 @@ class Database {
         // productName is the name of the product to review
         // review is the document to insert
         // remeber once it's finish to comment callback('Error reviewing product');
-
-        callback('Error reviewing product');
+        database.collection('products').updateOne({"name": productName}, {$push: {"reviews": review}}, callback);
+        // database.collection(products).update({"name":productName},{$push: {"reviews":review}}, callback);
+        // callback('Error reviewing product');
       }
     });
   }
